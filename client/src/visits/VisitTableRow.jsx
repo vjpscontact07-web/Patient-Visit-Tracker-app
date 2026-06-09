@@ -5,8 +5,8 @@ import {
   HiOutlineTrash,
   HiOutlineXCircle,
 } from "react-icons/hi2";
-import ActionIconButton from "./ActionIconButton";
-import { TableCell, TableRow } from "./Table";
+import ActionIconButton from "../components/ActionIconButton";
+import { TableCell, TableRow } from "../components/Table";
 
 const STATUS_STYLES = {
   scheduled: "bg-sky-50 text-sky-700 ring-sky-200",

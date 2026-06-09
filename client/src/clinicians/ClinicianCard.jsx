@@ -5,8 +5,8 @@ import {
   HiOutlinePencilSquare,
   HiOutlineTrash,
 } from "react-icons/hi2";
-import Avatar from "./Avatar";
-import ActionIconButton from "./ActionIconButton";
+import Avatar from "../components/Avatar";
+import ActionIconButton from "../components/ActionIconButton";
 
 export default function ClinicianCard({
   clinician,

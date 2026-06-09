@@ -4,7 +4,7 @@ import {
   TableHeadCell,
   TableHeader,
   TableHeaderRow,
-} from "./Table";
+} from "../components/Table";
 import VisitTableRow from "./VisitTableRow";
 
 const COLUMNS = [

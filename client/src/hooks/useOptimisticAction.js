@@ -1,6 +1,7 @@
 import { useCallback, useRef } from "react";
+import toast from "react-hot-toast";
 
-export default function useOptimisticAction(addToast) {
+export default function useOptimisticAction() {
   const inFlight = useRef(new Set());
 
   const run = useCallback(
@@ -10,7 +11,7 @@ export default function useOptimisticAction(addToast) {
 
       const snapshot = apply();
 
-      if (successMessage) addToast(successMessage);
+      if (successMessage) toast.success(successMessage);
 
       try {
         const result = await request();
@@ -18,13 +19,13 @@ export default function useOptimisticAction(addToast) {
         return result;
       } catch (err) {
         onError?.(snapshot, err);
-        addToast(err.message, "error");
+        toast.error(err.message);
         throw err;
       } finally {
         inFlight.current.delete(key);
       }
     },
-    [addToast],
+    [],
   );
 
   return run;

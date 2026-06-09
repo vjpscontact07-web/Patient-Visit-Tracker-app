@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Modal from "../Modal";
-import FormActions from "../FormActions";
-import { FormServerError, TextField } from "../FormField";
-import { clinicianSchema } from "../../schemas/validation";
+import Modal from "../components/Modal";
+import FormActions from "../components/FormActions";
+import { FormServerError, TextField } from "../components/FormField";
+import { clinicianSchema } from "../schemas/validation";
 
 export default function ClinicianFormModal({
   title,
@@ -30,7 +30,7 @@ export default function ClinicianFormModal({
     try {
       await onSave(data);
     } catch (err) {
-      setServerError(err?.message || 'An unexpected error occurred.');
+      setServerError(err?.message || "An unexpected error occurred.");
     }
   }
 

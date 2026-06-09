@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Modal from "../Modal";
-import FormActions from "../FormActions";
+import Modal from "../components/Modal";
+import FormActions from "../components/FormActions";
 import {
   FormServerError,
   SelectField,
   TextField,
   TextareaField,
-} from "../FormField";
-import { visitSchema } from "../../schemas/validation";
-import { nowDatetimeLocal, toDatetimeLocal } from "../../utils/dates";
+} from "../components/FormField";
+import { visitSchema } from "../schemas/validation";
+import { nowDatetimeLocal, toDatetimeLocal } from "../utils/dates";
 
 export default function VisitFormModal({
   title,
@@ -62,7 +62,7 @@ export default function VisitFormModal({
         notes: data.notes,
       });
     } catch (err) {
-      setServerError(err?.message || 'An unexpected error occurred.');
+      setServerError(err?.message || "An unexpected error occurred.");
     }
   }
 

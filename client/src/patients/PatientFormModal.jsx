@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Modal from "../Modal";
-import FormActions from "../FormActions";
-import { FormServerError, TextField } from "../FormField";
-import { patientSchema } from "../../schemas/validation";
+import Modal from "../components/Modal";
+import FormActions from "../components/FormActions";
+import { FormServerError, TextField } from "../components/FormField";
+import { patientSchema } from "../schemas/validation";
 
 export default function PatientFormModal({ title, initial, onClose, onSave }) {
   const [serverError, setServerError] = useState("");
@@ -30,7 +30,7 @@ export default function PatientFormModal({ title, initial, onClose, onSave }) {
         date_of_birth: data.date_of_birth || null,
       });
     } catch (err) {
-      setServerError(err?.message || 'An unexpected error occurred.');
+      setServerError(err?.message || "An unexpected error occurred.");
     }
   }
 

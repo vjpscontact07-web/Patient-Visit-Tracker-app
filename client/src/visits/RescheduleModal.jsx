@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Modal from "../Modal";
-import FormActions from "../FormActions";
-import { FormServerError, TextField } from "../FormField";
-import { rescheduleSchema } from "../../schemas/validation";
-import { nowDatetimeLocal } from "../../utils/dates";
+import Modal from "../components/Modal";
+import FormActions from "../components/FormActions";
+import { FormServerError, TextField } from "../components/FormField";
+import { rescheduleSchema } from "../schemas/validation";
+import { nowDatetimeLocal } from "../utils/dates";
 
 export default function RescheduleModal({ visit, onClose, onSave }) {
   const [serverError, setServerError] = useState("");
@@ -25,7 +25,7 @@ export default function RescheduleModal({ visit, onClose, onSave }) {
     try {
       await onSave(new Date(data.visit_date).toISOString());
     } catch (err) {
-      setServerError(err?.message || 'An unexpected error occurred.');
+      setServerError(err?.message || "An unexpected error occurred.");
     }
   }
 
