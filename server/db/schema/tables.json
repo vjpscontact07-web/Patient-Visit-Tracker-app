@@ -1,0 +1,125 @@
+{
+  "tables": {
+    "users": {
+      "columns": [
+        { "name": "id", "type": "SERIAL", "primaryKey": true },
+        {
+          "name": "email",
+          "type": "VARCHAR(255)",
+          "notNull": true,
+          "unique": true
+        },
+        { "name": "password_hash", "type": "VARCHAR(255)", "notNull": true },
+        { "name": "name", "type": "VARCHAR(255)", "notNull": true },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMPTZ",
+          "notNull": true,
+          "default": "NOW()"
+        }
+      ],
+      "indexes": []
+    },
+    "clinicians": {
+      "columns": [
+        { "name": "id", "type": "SERIAL", "primaryKey": true },
+        { "name": "name", "type": "VARCHAR(255)", "notNull": true },
+        { "name": "specialty", "type": "VARCHAR(255)" },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMPTZ",
+          "notNull": true,
+          "default": "NOW()"
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMPTZ",
+          "notNull": true,
+          "default": "NOW()"
+        }
+      ],
+      "indexes": []
+    },
+    "patients": {
+      "columns": [
+        { "name": "id", "type": "SERIAL", "primaryKey": true },
+        { "name": "name", "type": "VARCHAR(255)", "notNull": true },
+        { "name": "date_of_birth", "type": "DATE" },
+        { "name": "mrn", "type": "VARCHAR(50)" },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMPTZ",
+          "notNull": true,
+          "default": "NOW()"
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMPTZ",
+          "notNull": true,
+          "default": "NOW()"
+        }
+      ],
+      "indexes": []
+    },
+    "visits": {
+      "columns": [
+        { "name": "id", "type": "SERIAL", "primaryKey": true },
+        {
+          "name": "clinician_id",
+          "type": "INTEGER",
+          "notNull": true,
+          "references": {
+            "table": "clinicians",
+            "column": "id",
+            "onDelete": "CASCADE"
+          }
+        },
+        {
+          "name": "patient_id",
+          "type": "INTEGER",
+          "notNull": true,
+          "references": {
+            "table": "patients",
+            "column": "id",
+            "onDelete": "CASCADE"
+          }
+        },
+        {
+          "name": "visit_date",
+          "type": "TIMESTAMPTZ",
+          "notNull": true,
+          "default": "NOW()"
+        },
+        { "name": "notes", "type": "TEXT" },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "notNull": true,
+          "default": "'scheduled'"
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMPTZ",
+          "notNull": true,
+          "default": "NOW()"
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMPTZ",
+          "notNull": true,
+          "default": "NOW()"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_visits_visit_date",
+          "columns": ["visit_date"],
+          "order": "DESC"
+        },
+        { "name": "idx_visits_clinician_id", "columns": ["clinician_id"] },
+        { "name": "idx_visits_patient_id", "columns": ["patient_id"] },
+        { "name": "idx_visits_status", "columns": ["status"] }
+      ]
+    }
+  }
+}
