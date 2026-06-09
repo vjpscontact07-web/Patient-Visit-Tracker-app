@@ -62,21 +62,13 @@ export default function VisitFilters({
               type="date"
               value={filters.visit_date}
               onChange={(e) =>
-                onChange({ ...filters, visit_date: e.target.value })
+                onChange({
+                  ...filters,
+                  visit_date: e.target.value || todayDateKey(),
+                })
               }
               className={filterFieldClass}
             />
-            <button
-              type="button"
-              onClick={() => onChange({ ...filters, visit_date: "" })}
-              className={`shrink-0 rounded-lg border px-3 text-sm font-medium transition ${
-                !filters.visit_date
-                  ? "border-teal-200 bg-teal-50 text-teal-700"
-                  : "border-slate-200 bg-white text-slate-600 hover:border-teal-200 hover:text-teal-700"
-              }`}
-            >
-              All
-            </button>
             <button
               type="button"
               onClick={() =>

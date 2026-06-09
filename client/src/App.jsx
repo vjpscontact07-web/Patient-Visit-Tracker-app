@@ -15,6 +15,7 @@ import {
   formatDate,
   formatDob,
   formatVisitParts,
+  todayDateKey,
 } from "./utils/dates";
 import Login from "./Login";
 import ConfirmModal from "./components/ConfirmModal";
@@ -120,6 +121,17 @@ export default function App() {
   function updateVisitFilters(next) {
     setSearchParams(buildVisitSearchParams(next), { replace: true });
   }
+
+  useEffect(() => {
+    if (location.pathname !== "/visits" || searchParams.get("date")) return;
+    setSearchParams(
+      buildVisitSearchParams({
+        ...parseVisitSearchParams(searchParams),
+        visit_date: todayDateKey(),
+      }),
+      { replace: true },
+    );
+  }, [location.pathname, searchParams, setSearchParams]);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(filters.search), 300);
@@ -591,7 +603,7 @@ export default function App() {
                       </div>
                     ) : visitList.length === 0 ? (
                       <EmptyState
-                        message={`No visits found${filters.visit_date ? " for the selected date" : ""}. Try another date or clear filters.`}
+                        message="No visits found for the selected date. Try another date or clear other filters."
                       />
                     ) : (
                       <>

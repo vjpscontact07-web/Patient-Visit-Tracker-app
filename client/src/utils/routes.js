@@ -1,3 +1,5 @@
+import { todayDateKey } from "./dates.js";
+
 export function buildVisitSearchParams(filters) {
   const params = new URLSearchParams();
   if (filters.search) params.set("search", filters.search);
@@ -14,7 +16,7 @@ export function parseVisitSearchParams(searchParams) {
     clinician_id: searchParams.get("clinician_id") || "",
     patient_id: searchParams.get("patient_id") || "",
     status: searchParams.get("status") || "",
-    visit_date: searchParams.get("date") || "",
+    visit_date: searchParams.get("date") || todayDateKey(),
   };
 }
 
@@ -30,7 +32,7 @@ export function clinicianVisitsPath(clinicianId) {
     clinician_id: String(clinicianId),
     patient_id: "",
     status: "",
-    visit_date: "",
+    visit_date: todayDateKey(),
   });
 }
 
@@ -40,6 +42,6 @@ export function patientVisitsPath(patientId) {
     clinician_id: "",
     patient_id: String(patientId),
     status: "",
-    visit_date: "",
+    visit_date: todayDateKey(),
   });
 }
