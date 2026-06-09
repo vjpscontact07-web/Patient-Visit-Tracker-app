@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Modal from "../Modal";
 import FormActions from "../FormActions";
@@ -21,8 +21,13 @@ export default function VisitFormModal({
   onSave,
 }) {
   const [serverError, setServerError] = useState("");
+  const defaultVisitDate = initial?.visit_date
+    ? toDatetimeLocal(initial.visit_date)
+    : nowDatetimeLocal();
+
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -30,9 +35,7 @@ export default function VisitFormModal({
     defaultValues: {
       clinician_id: String(initial?.clinician_id || ""),
       patient_id: String(initial?.patient_id || ""),
-      visit_date: initial?.visit_date
-        ? toDatetimeLocal(initial.visit_date)
-        : nowDatetimeLocal(),
+      visit_date: defaultVisitDate,
       notes: initial?.notes || "",
     },
   });
@@ -84,13 +87,22 @@ export default function VisitFormModal({
           placeholder="Choose a patient"
           options={patientOptions}
         />
-        <TextField
-          label="Visit Date & Time"
+        <Controller
           name="visit_date"
-          type="datetime-local"
-          register={register}
-          error={errors.visit_date}
-          required
+          control={control}
+          render={({ field }) => (
+            <TextField
+              label="Visit Date & Time"
+              name="visit_date"
+              type="datetime-local"
+              step="60"
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              error={errors.visit_date}
+              required
+            />
+          )}
         />
         <TextareaField
           label="Notes"

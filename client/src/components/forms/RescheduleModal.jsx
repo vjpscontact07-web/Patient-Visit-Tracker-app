@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Modal from "../Modal";
 import FormActions from "../FormActions";
 import { FormServerError, TextField } from "../FormField";
 import { rescheduleSchema } from "../../schemas/validation";
-import { toDatetimeLocal } from "../../utils/dates";
+import { nowDatetimeLocal } from "../../utils/dates";
 
 export default function RescheduleModal({ visit, onClose, onSave }) {
   const [serverError, setServerError] = useState("");
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(rescheduleSchema),
     defaultValues: {
-      visit_date: toDatetimeLocal(visit.visit_date),
+      visit_date: nowDatetimeLocal(),
     },
   });
 
@@ -36,13 +36,22 @@ export default function RescheduleModal({ visit, onClose, onSave }) {
           Rescheduling visit for <strong>{visit.patient_name}</strong> with{" "}
           <strong>{visit.clinician_name}</strong>
         </p>
-        <TextField
-          label="New Date & Time"
+        <Controller
           name="visit_date"
-          type="datetime-local"
-          register={register}
-          error={errors.visit_date}
-          required
+          control={control}
+          render={({ field }) => (
+            <TextField
+              label="New Date & Time"
+              name="visit_date"
+              type="datetime-local"
+              step="60"
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              error={errors.visit_date}
+              required
+            />
+          )}
         />
         <FormServerError message={serverError} />
         <FormActions

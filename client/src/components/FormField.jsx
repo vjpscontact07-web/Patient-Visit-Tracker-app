@@ -96,9 +96,14 @@ export function TextField({
   required = false,
   type = "text",
   variant = "default",
+  value,
+  onChange,
+  onBlur,
   ...props
 }) {
   const hasError = Boolean(error);
+  const isControlled = value !== undefined;
+  const registration = !isControlled && register && name ? register(name) : {};
 
   return (
     <FormFieldLayout
@@ -110,8 +115,10 @@ export function TextField({
       {(errorId) => (
         <input
           id={name}
+          name={name}
           type={type}
-          {...register(name)}
+          {...registration}
+          {...(isControlled ? { value, onChange, onBlur } : {})}
           aria-invalid={hasError}
           aria-describedby={errorId}
           className={fieldClass(hasError, variant)}
