@@ -8,7 +8,11 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import { HiOutlineInbox, HiOutlinePlus } from "react-icons/hi2";
+import {
+  HiOutlineArrowRightOnRectangle,
+  HiOutlineInbox,
+  HiOutlinePlus,
+} from "react-icons/hi2";
 import { api, getAuthToken, setAuthToken } from "./api";
 import { useToast } from "./hooks/useToast";
 import {
@@ -358,9 +362,21 @@ export default function App() {
             </span>
             <button
               type="button"
-              onClick={handleLogout}
-              className="rounded-lg border border-white/20 px-3.5 py-2 text-sm font-medium transition hover:bg-white/10"
+              onClick={() =>
+                askConfirm({
+                  title: "Sign Out?",
+                  message:
+                    "You will need to sign in again to access the Patient Visit Tracker.",
+                  confirmLabel: "Sign Out",
+                  cancelLabel: "Stay Signed In",
+                  intent: "warning",
+                  action: handleLogout,
+                })
+              }
+              className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-3.5 py-2 text-sm font-medium transition hover:bg-white/10"
+              aria-label="Sign out"
             >
+              <HiOutlineArrowRightOnRectangle className="h-4 w-4" />
               Sign Out
             </button>
           </div>
